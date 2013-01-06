@@ -1,0 +1,40 @@
+﻿1. Add environment to procs/lambdas. DONE
+2. Separate scanner and parser.
+3. Make Expressions lists.
+4. Go over other todo items.
+5. Optimize 
+
+(define (search-for-primes a n)
+  (search-for-primes-helper (next-odd a) 0 n))
+ 
+(define (search-for-primes-helper a found n)
+  (if (= found n)
+      08.
+      (search-for-primes-helper (+ a 2)
+                                (if (timed-prime-test a)
+                                    (+ found 1)
+                                    found)
+                                n)))
+ 
+(define (next-odd n)
+  (if (even? n)
+      (+ n 1)
+      n))
+(search-for-primes 1000000000 3)
+
+(nth-root 4294967296 32)
+(nth-root 18446744073709551616 64)
+(nth-root 340282366920938463463374607431768211456 128)
+
+2.000000000000006
+2.0000000000000853
+2.0000000000082006
+
+6. Implement load
+7. Decimal division (simpsons-integral cube 0 1 100) DONE
+8. Make distinction between constant values and procedures. Having a constant as an operator within an Identity proc should be an error. 
+(define (f g) (g 2))
+(f f)
+9. Decide on number representation. Decimal cannot parse double numbers. See Comparison. See Power. DONE 
+10. Better handling of integer overflows. Currently there is something for Multiply.
+11. Better handling of divison. Only double for now, maybe fraction object in future.

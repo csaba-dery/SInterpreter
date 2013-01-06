@@ -1,0 +1,5 @@
+C:\topcoder\SInterpreter\SInterpreter\bin\Debug\SInterpreter.exe
+C:\topcoder\SInterpreter\SInterpreter\bin\Debug\SInterpreter.pdb
+C:\topcoder\SInterpreter\SInterpreter\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\topcoder\SInterpreter\SInterpreter\obj\x86\Debug\SInterpreter.exe
+C:\topcoder\SInterpreter\SInterpreter\obj\x86\Debug\SInterpreter.pdb
