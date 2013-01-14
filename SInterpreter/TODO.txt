@@ -2,7 +2,7 @@
 2. Separate scanner and parser.
 3. Make Expressions lists.
 4. Go over other todo items.
-5. Optimize 
+5. Optimize DONE
 
 (define (search-for-primes a n)
   (search-for-primes-helper (next-odd a) 0 n))

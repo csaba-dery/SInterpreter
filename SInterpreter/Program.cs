@@ -12,7 +12,7 @@ namespace SInterpreter
         static void Main(string[] args)
         {
             Frame globalFrame = CreateGlobalFrame();
-            BufferedStream codeStream = new BufferedStream(new FileStream("code.txt",FileMode.Open));
+            BufferedStream codeStream = new BufferedStream(new FileStream("code1.txt",FileMode.Open));
             Scanner scanner = new Scanner(codeStream);
             StreamReader testReader = new StreamReader(File.Open("test.txt", FileMode.Open));
 
@@ -81,6 +81,7 @@ namespace SInterpreter
             global.AddBinding("log", new Logarithm(global));
             global.AddBinding("expt", new Power(global));
             global.AddBinding("floor", new Floor(global));
+            global.AddBinding("load", new Load(global));
 
             return global;
         }

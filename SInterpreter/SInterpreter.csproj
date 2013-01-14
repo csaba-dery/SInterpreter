@@ -51,6 +51,7 @@
     <Compile Include="Native\Boolean.cs" />
     <Compile Include="Native\Comparison.cs" />
     <Compile Include="Native\Display.cs" />
+    <Compile Include="Native\Load.cs" />
     <Compile Include="Native\Power.cs" />
     <Compile Include="Native\Newline.cs" />
     <Compile Include="Native\Not.cs" />
