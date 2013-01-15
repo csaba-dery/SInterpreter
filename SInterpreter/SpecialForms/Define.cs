@@ -9,7 +9,7 @@ namespace SInterpreter.SpecialForms
     {
         public object Evaluate(Frame environment, Expression expression)
         {
-            List<Expression> operands = expression.GetOperands();
+            List<Expression> operands = expression.GetRest();
             if (operands.Count < 2)
             {
                 throw new Exception("Invalid define arguments");
@@ -19,14 +19,14 @@ namespace SInterpreter.SpecialForms
             {
                 isFunctionDeclaration = true;
             }
-            String name = operands[0].GetOperator().ToString();
+            String name = operands[0].GetFirst().ToString();
             List<string> parameters = new List<string>();
-            foreach (Expression expr in operands[0].GetOperands())
+            foreach (Expression expr in operands[0].GetRest())
             {
                 parameters.Add(expr.ToString());
             }
             List<Expression> body = new List<Expression>(operands.Count - 1);
-            if (!isFunctionDeclaration && operands[1].GetOperator() != null && operands[1].GetOperator().ToString() == "lambda")
+            if (!isFunctionDeclaration && operands[1].GetFirst() != null && operands[1].GetFirst().ToString() == "lambda")
             {
                 LambdaDefinition factory = new LambdaDefinition();
                 environment.AddBinding(name, (Lambda)factory.Evaluate(environment, operands[1]));

@@ -14,12 +14,12 @@ namespace SInterpreter
             _name = name;
         }
 
-        internal override Expression GetOperator()
+        internal override Expression GetFirst()
         {
             return new Literal(_name);
         }
 
-        internal override List<Expression> GetOperands()
+        internal override List<Expression> GetRest()
         {
             return new List<Expression>();
         }

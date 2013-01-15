@@ -12,9 +12,9 @@ namespace SInterpreter
         static void Main(string[] args)
         {
             Frame globalFrame = CreateGlobalFrame();
-            BufferedStream codeStream = new BufferedStream(new FileStream("code1.txt",FileMode.Open));
+            BufferedStream codeStream = new BufferedStream(new FileStream("code2.txt",FileMode.Open));
             Scanner scanner = new Scanner(codeStream);
-            StreamReader testReader = new StreamReader(File.Open("test.txt", FileMode.Open));
+            StreamReader testReader = new StreamReader(File.Open("test2.txt", FileMode.Open));
 
             Expression expr = scanner.NextExpression;
             String result = testReader.ReadLine();
@@ -82,6 +82,9 @@ namespace SInterpreter
             global.AddBinding("expt", new Power(global));
             global.AddBinding("floor", new Floor(global));
             global.AddBinding("load", new Load(global));
+            global.AddBinding("cons", new Cons(global));
+            global.AddBinding("car", new Car(global));
+            global.AddBinding("cdr", new Cdr(global));
 
             return global;
         }

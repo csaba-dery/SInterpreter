@@ -9,7 +9,7 @@ namespace SInterpreter.SpecialForms
     {
         public object Evaluate(Frame environment, Expression expression)
         {
-            List<Expression> operands = expression.GetOperands();
+            List<Expression> operands = expression.GetRest();
             if (operands.Count == 0)
             {
                 throw new Exception("or: invalid number of arguments.");

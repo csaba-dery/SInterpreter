@@ -9,22 +9,22 @@ namespace SInterpreter.SpecialForms
     {
         public object Evaluate(Frame environment, Expression expression)
         {
-            if (expression.GetOperands().Count < 2)
+            if (expression.GetRest().Count < 2)
             {
                 throw new Exception("Invalid lambda definition");
             }
-            Expression paramList = expression.GetOperands()[0];
-            List<String> parameters = new List<string>(paramList.GetOperands().Count + 1);
-            parameters.Add(paramList.GetOperator().ToString());
-            foreach (Expression param in paramList.GetOperands())
+            Expression paramList = expression.GetRest()[0];
+            List<String> parameters = new List<string>(paramList.GetRest().Count + 1);
+            parameters.Add(paramList.GetFirst().ToString());
+            foreach (Expression param in paramList.GetRest())
             {
                 parameters.Add(param.ToString());
             }
 
             List<Expression> body = new List<Expression>();
-            for (int i = 1; i < expression.GetOperands().Count; i++)
+            for (int i = 1; i < expression.GetRest().Count; i++)
             {
-                body.Add(expression.GetOperands()[i]);
+                body.Add(expression.GetRest()[i]);
             }
             return new Lambda(environment, parameters, body);
         }

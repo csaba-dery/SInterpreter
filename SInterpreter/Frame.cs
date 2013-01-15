@@ -196,7 +196,7 @@ namespace SInterpreter
                 return expression;
             }
 
-            object oprt = Evaluate(expression.GetOperator());
+            object oprt = Evaluate(expression.GetFirst());
             String procName = oprt.ToString();
             Procedure proc = null;
             if (oprt != null && oprt is Procedure)
@@ -304,7 +304,7 @@ namespace SInterpreter
             //Console.WriteLine(name);
             //this.EvaluatedProcedure = proc;
 
-            List<Expression> operands = expression.GetOperands();
+            List<Expression> operands = expression.GetRest();
             if (proc is Identity && operands.Count > 0)
             {
                 throw new Exception(String.Format("The object {0} is not applicable.",proc.Evaluate(this)));

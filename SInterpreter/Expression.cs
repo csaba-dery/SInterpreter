@@ -12,8 +12,8 @@ namespace SInterpreter
 
     internal abstract class Expression
     {
-        internal abstract Expression GetOperator();
-        internal abstract List<Expression> GetOperands();
+        internal abstract Expression GetFirst();
+        internal abstract List<Expression> GetRest();
         internal abstract bool IsLiteral {get;}
     }
 }

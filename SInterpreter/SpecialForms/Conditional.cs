@@ -9,7 +9,7 @@ namespace SInterpreter.SpecialForms
     {
         public object Evaluate(Frame environment, Expression expression)
         {
-            List<Expression> operands = expression.GetOperands();
+            List<Expression> operands = expression.GetRest();
             if (operands.Count < 1)
             {
                 throw new Exception("Invalid number of cond arguments");
@@ -17,11 +17,11 @@ namespace SInterpreter.SpecialForms
             Frame evalFrame = new Frame(new Dictionary<string, Procedure>(0), environment,environment, null, true, null);
             foreach (Expression expr in operands)
             {
-                if (expr.GetOperator().ToString() == "else")
+                if (expr.GetFirst().ToString() == "else")
                 {
-                    return evalFrame.Evaluate(expr.GetOperands()[0], true);
+                    return evalFrame.Evaluate(expr.GetRest()[0], true);
                 }
-                object result = evalFrame.Evaluate(expr.GetOperator());
+                object result = evalFrame.Evaluate(expr.GetFirst());
                 bool resultValue = false;
                 if (!bool.TryParse(result.ToString(), out resultValue))
                 {
@@ -31,9 +31,9 @@ namespace SInterpreter.SpecialForms
                 {
                     object exprResult = string.Empty;
 
-                    for (int i = 0; i < expr.GetOperands().Count;i++ )
+                    for (int i = 0; i < expr.GetRest().Count;i++ )
                     {
-                        exprResult = evalFrame.Evaluate(expr.GetOperands()[i]);
+                        exprResult = evalFrame.Evaluate(expr.GetRest()[i]);
                     }
                     return exprResult;
                 }

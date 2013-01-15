@@ -43,13 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constant.cs" />
     <Compile Include="Continuation.cs" />
-    <Compile Include="IEvaluatable.cs" />
+    <Compile Include="IExpressionList.cs" />
     <Compile Include="Native\Add.cs" />
     <Compile Include="Combination.cs" />
     <Compile Include="Native\Boolean.cs" />
+    <Compile Include="Native\PairRetrieval.cs" />
     <Compile Include="Native\Comparison.cs" />
+    <Compile Include="Native\Cons.cs" />
     <Compile Include="Native\Display.cs" />
     <Compile Include="Native\Load.cs" />
     <Compile Include="Native\Power.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Native\Remainder.cs" />
     <Compile Include="Native\Runtime.cs" />
     <Compile Include="Native\Trigonometric.cs" />
+    <Compile Include="Pair.cs" />
     <Compile Include="RestParameters.cs" />
     <Compile Include="SpecialForms\And.cs" />
     <Compile Include="SpecialForms\Conditional.cs" />

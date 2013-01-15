@@ -19,7 +19,7 @@ namespace SInterpreter
             _oprt = oprt;
         }
 
-        internal override Expression GetOperator()
+        internal override Expression GetFirst()
         {
             return _oprt;
         }
@@ -29,7 +29,7 @@ namespace SInterpreter
             _operands.Add(operand);
         }
 
-        internal override List<Expression> GetOperands()
+        internal override List<Expression> GetRest()
         {
             return _operands;
         }
@@ -47,17 +47,17 @@ namespace SInterpreter
                 return false;
             }
             Combination other = (Combination)obj;
-            if (!GetOperator().Equals(other.GetOperator()))
+            if (!GetFirst().Equals(other.GetFirst()))
             {
                 return false;
             }
-            if (GetOperands().Count != other.GetOperands().Count)
+            if (GetRest().Count != other.GetRest().Count)
             {
                 return false;
             }
-            List<Expression> operands = GetOperands();
-            List<Expression> otherOperands = other.GetOperands();
-            for (int i = 0; i < GetOperands().Count; i++)
+            List<Expression> operands = GetRest();
+            List<Expression> otherOperands = other.GetRest();
+            for (int i = 0; i < GetRest().Count; i++)
             {
                 if (!operands[i].Equals(otherOperands[i]))
                 {
@@ -71,8 +71,8 @@ namespace SInterpreter
         {
             StringBuilder builder = new StringBuilder();
             builder.Append('(');
-            builder.Append(GetOperator().ToString());
-            foreach (Expression expr in GetOperands())
+            builder.Append(GetFirst().ToString());
+            foreach (Expression expr in GetRest())
             {
                 builder.Append(' ');
                 builder.Append(expr.ToString());

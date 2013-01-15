@@ -30,7 +30,7 @@
 2.0000000000000853
 2.0000000000082006
 
-6. Implement load
+6. Implement load DONE
 7. Decimal division (simpsons-integral cube 0 1 100) DONE
 8. Make distinction between constant values and procedures. Having a constant as an operator within an Identity proc should be an error. 
 (define (f g) (g 2))

@@ -9,25 +9,25 @@ namespace SInterpreter.SpecialForms
     {
         public object Evaluate(Frame environment, Expression expression)
         {
-            if (expression.GetOperands().Count < 2)
+            if (expression.GetRest().Count < 2)
             {
                 throw new Exception("Invalid let definition");
             }
-            Expression definitionList = expression.GetOperands()[0];
-            List<string> paramNames = new List<string>(definitionList.GetOperands().Count + 1);
+            Expression definitionList = expression.GetRest()[0];
+            List<string> paramNames = new List<string>(definitionList.GetRest().Count + 1);
             Dictionary<string, Procedure> bindings = new Dictionary<string, Procedure>(paramNames.Capacity);
 
-            Expression firstDefinition = definitionList.GetOperator();
+            Expression firstDefinition = definitionList.GetFirst();
             AddDefinition(environment, paramNames, bindings, firstDefinition);
-            foreach (Expression definition in definitionList.GetOperands()) 
+            foreach (Expression definition in definitionList.GetRest()) 
             {
                 AddDefinition(environment, paramNames, bindings, definition);
             }
 
-            List<Expression> body = new List<Expression>(expression.GetOperands().Count - 1);
-            for (int i = 1; i < expression.GetOperands().Count; i++)
+            List<Expression> body = new List<Expression>(expression.GetRest().Count - 1);
+            for (int i = 1; i < expression.GetRest().Count; i++)
             {
-                body.Add(expression.GetOperands()[i]);
+                body.Add(expression.GetRest()[i]);
             }
 
             Lambda block = new Lambda(environment, paramNames, body);
@@ -42,14 +42,14 @@ namespace SInterpreter.SpecialForms
         {
             if (definition != null)
             {
-                string name = definition.GetOperator().ToString();
+                string name = definition.GetFirst().ToString();
                 paramNames.Add(name);
 
-                if (definition.GetOperands().Count == 0)
+                if (definition.GetRest().Count == 0)
                 {
                     throw new Exception("Let: expression missing for " + name);
                 }
-                object value = environment.Evaluate(definition.GetOperands()[0]);
+                object value = environment.Evaluate(definition.GetRest()[0]);
                 if (value is Procedure)
                 {
                     bindings.Add(name, (Procedure)value);
