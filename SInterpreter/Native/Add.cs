@@ -7,7 +7,7 @@ namespace SInterpreter.Native
 {
     internal class Add : MathProcedure
     {
-        internal Add(Frame defEnv) : base(defEnv) {         }
+        internal Add(Frame defEnv) : base(defEnv) {}
 
         protected override Int64 ProcessValues(List<Int64> paramValues)
         {

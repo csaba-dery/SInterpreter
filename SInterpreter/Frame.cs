@@ -32,13 +32,7 @@ namespace SInterpreter
         }
 
 
-        internal Frame(IDictionary<String, Procedure> bindings, Frame parent, Frame callingFrame, Procedure proc,bool isSpecialForm,string name): 
-            this(bindings,parent,callingFrame,proc,isSpecialForm,name,false)
-        {
-        }
-
-
-        internal Frame(IDictionary<String, Procedure> bindings, Frame parent, Frame callingFrame, Procedure proc, bool isSpecialForm, string name,bool evalOperands)
+        internal Frame(IDictionary<String, Procedure> bindings, Frame parent, Frame callingFrame, Procedure proc, bool isSpecialForm, string name)
         {
             _bindings = bindings;
             ParentFrame = parent;
@@ -47,12 +41,6 @@ namespace SInterpreter
             EvaluatedProcedureName = name;
             IsSpecialForm = isSpecialForm;
             frameCount++;
-            //_evalOperands = evalOperands;
-            if (CallingFrame != null && CallingFrame._evalOperands)
-            {
-                //OperatorFrame = CallingFrame.OperatorFrame;
-                //_evalOperands = true;
-            }
         }
 
 
@@ -71,12 +59,6 @@ namespace SInterpreter
         {
             get;
             private set;
-        }
-
-        private Frame OperatorFrame
-        {
-            get;
-            set;
         }
 
 
@@ -273,7 +255,7 @@ namespace SInterpreter
                     {
                         tailCallFrame.ParentFrame = this.ParentFrame;
                     }*/
-                    return new Continuation(expression, proc, tailCallFrame);
+                    return new Continuation(expression, tailCallFrame);
                 }
             }
 
@@ -320,8 +302,7 @@ namespace SInterpreter
             IDictionary<String, Procedure> bindings = new Dictionary<string, Procedure>();
             for (int i = 0; i < proc.Parameters.Count; i++)
             {
-                Frame operandEnv = new Frame(new Dictionary<string, Procedure>(0), this, null, new Identity(this, null),false, "operand",true);
-                operandEnv.OperatorFrame = this;
+                Frame operandEnv = new Frame(new Dictionary<string, Procedure>(0), this, null, new Identity(this, null),false, "operand");
                 if (proc.Parameters[i] == ".")
                 {
                     RestParameters restParameters = new RestParameters();

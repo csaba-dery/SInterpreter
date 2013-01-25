@@ -31,5 +31,16 @@ namespace SInterpreter
         {
             return _rest;
         }
+
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append('(');
+            builder.Append(GetFirst());
+            builder.Append(" . ");
+            builder.Append(GetRest());
+            builder.Append(')');
+            return builder.ToString();
+        }
     }
 }

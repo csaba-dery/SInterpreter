@@ -44,10 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Continuation.cs" />
-    <Compile Include="IExpressionList.cs" />
+    <Compile Include="IPair.cs" />
     <Compile Include="Native\Add.cs" />
     <Compile Include="Combination.cs" />
     <Compile Include="Native\Boolean.cs" />
+    <Compile Include="Native\Error.cs" />
+    <Compile Include="Native\GCD.cs" />
+    <Compile Include="Native\Max.cs" />
+    <Compile Include="Native\Min.cs" />
     <Compile Include="Native\PairRetrieval.cs" />
     <Compile Include="Native\Comparison.cs" />
     <Compile Include="Native\Cons.cs" />

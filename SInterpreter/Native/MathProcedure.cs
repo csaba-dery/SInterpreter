@@ -82,6 +82,7 @@ namespace SInterpreter.Native
             Int64 intValue = 0;
             double decimalVal = 0;
             
+            //TODO what if numberText is a double, but have no decimals
             if (numberText is Int64)
             {
                 return (Int64)numberText;
@@ -92,11 +93,11 @@ namespace SInterpreter.Native
                 return (double)numberText;
             }
 
-            if (numberText != null && Int64.TryParse(numberText.ToString(),out intValue))
+            if (numberText != null && Int64.TryParse(numberText.ToString(), out intValue))
             {
                 return intValue;
             }
-            else if (numberText != null && double.TryParse(numberText.ToString(),out decimalVal))
+            else if (numberText != null && double.TryParse(numberText.ToString(), out decimalVal))
             {
                 isDecimal = true;
                 return decimalVal;

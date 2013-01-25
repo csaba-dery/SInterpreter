@@ -49,7 +49,11 @@ namespace SInterpreter.SpecialForms
                 {
                     throw new Exception("Let: expression missing for " + name);
                 }
-                object value = environment.Evaluate(definition.GetRest()[0]);
+
+                //TODO clean up the constructor and property 
+                Frame valueEnv = new Frame(new Dictionary<string, Procedure>(0), environment, null, new Identity(environment, null), false, "let-value");
+
+                object value = valueEnv.Evaluate(definition.GetRest()[0],true);
                 if (value is Procedure)
                 {
                     bindings.Add(name, (Procedure)value);

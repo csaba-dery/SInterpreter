@@ -15,7 +15,7 @@ namespace SInterpreter.SpecialForms
                 throw new Exception("Invalid define arguments");
             }
             bool isFunctionDeclaration = false;
-            if (operands[0] is Combination) //then it is not (define x (lambda ...
+            if (operands[0] is Combination) 
             {
                 isFunctionDeclaration = true;
             }
@@ -26,10 +26,17 @@ namespace SInterpreter.SpecialForms
                 parameters.Add(expr.ToString());
             }
             List<Expression> body = new List<Expression>(operands.Count - 1);
-            if (!isFunctionDeclaration && operands[1].GetFirst() != null && operands[1].GetFirst().ToString() == "lambda")
+            if (!isFunctionDeclaration)
             {
-                LambdaDefinition factory = new LambdaDefinition();
-                environment.AddBinding(name, (Lambda)factory.Evaluate(environment, operands[1]));
+                var definitionValue = environment.Evaluate(operands[1]);
+                if (definitionValue is Lambda)
+                {
+                    environment.AddBinding(name, (Lambda)definitionValue);
+                }
+                else
+                {
+                    environment.AddBinding(name, new Identity(environment,definitionValue));
+                }
                 return name;
             }
             for (int i = 1; i < operands.Count; i++)

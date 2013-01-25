@@ -23,10 +23,14 @@ namespace SInterpreter
             {
                 evaluation = globalFrame.Evaluate(expr).ToString();
                 Console.WriteLine(evaluation);
-                if (!EqualEvals(evaluation,result)) 
+                if (!result.StartsWith("ignore") && !EqualEvals(evaluation,result)) 
                 {
                     Console.WriteLine(evaluation + " did not match result: " + result);
                     //return;
+                }
+                if (result.StartsWith("ignore"))
+                {
+                    Console.WriteLine("Expected Printout: " + result.Replace("ignore", ""));
                 }
                 expr = scanner.NextExpression;
                 result = testReader.ReadLine();
@@ -85,7 +89,10 @@ namespace SInterpreter
             global.AddBinding("cons", new Cons(global));
             global.AddBinding("car", new Car(global));
             global.AddBinding("cdr", new Cdr(global));
-
+            global.AddBinding("gcd", new GCD(global));
+            global.AddBinding("min", new Min(global));
+            global.AddBinding("max", new Max(global));
+            global.AddBinding("error", new Error(global));
             return global;
         }
 

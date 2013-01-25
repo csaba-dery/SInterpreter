@@ -1,1 +1,21 @@
-(load "code.txt")
+(define (make-point x y) (cons x y))
+
+(define a (make-point -1 2))
+
+(define zero (lambda (f) (lambda (x) x)))
+
+(define (add-1 n)
+   (lambda (f) (lambda (x) (f ((n f) x)))))
+
+(define (inc n)
+   (+ n 1))
+
+((zero inc) 0)
+
+((zero inc) 1)
+
+((zero inc) 2)
+
+(define one (add-1 zero))
+(define two (add-1 one))
+((one inc) 0)
