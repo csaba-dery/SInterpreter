@@ -57,6 +57,17 @@ namespace SInterpreter.Native
     }
 
 
+    internal class GreaterOrEqualThan : Comparison
+    {
+        internal GreaterOrEqualThan(Frame defEnv) : base(defEnv) { }
+
+        protected override bool CompareValues(double x, double y)
+        {
+            return x >= y;
+        }
+    }
+
+
     internal class LessThan : Comparison
     {
         internal LessThan(Frame defEnv) : base(defEnv) { }
@@ -64,6 +75,17 @@ namespace SInterpreter.Native
         protected override bool CompareValues(double x, double y)
         {
             return x < y;
+        }
+    }
+
+
+    internal class LessOrEqualThan : Comparison
+    {
+        internal LessOrEqualThan(Frame defEnv) : base(defEnv) { }
+
+        protected override bool CompareValues(double x, double y)
+        {
+            return x <= y;
         }
     }
 

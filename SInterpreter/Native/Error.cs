@@ -14,13 +14,12 @@ namespace SInterpreter.Native
 
         public override object Evaluate(Frame environment)
         {
-            //TODO think through this, how many frames to go back
-            Frame globalFrame = environment;
-            while (globalFrame.ParentFrame != null)
+            if (Parameters.Count <= 0) //TODO WTF! How can this be 0??
             {
-                globalFrame = globalFrame.ParentFrame;
+                throw new Exception("Invalid number of parameters.");
             }
-            return new Continuation(new Literal(Parameters[0]), globalFrame);
+            string message = environment.FindBindingValue(Parameters[0]).ToString();
+            throw new RaisedException(message);
         }
     }
 }

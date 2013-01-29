@@ -43,13 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsFactory.cs" />
     <Compile Include="Continuation.cs" />
+    <Compile Include="InterpreterException.cs" />
     <Compile Include="IPair.cs" />
     <Compile Include="Native\Add.cs" />
     <Compile Include="Combination.cs" />
     <Compile Include="Native\Boolean.cs" />
     <Compile Include="Native\Error.cs" />
     <Compile Include="Native\GCD.cs" />
+    <Compile Include="Native\ListCreate.cs" />
     <Compile Include="Native\Max.cs" />
     <Compile Include="Native\Min.cs" />
     <Compile Include="Native\PairRetrieval.cs" />
@@ -66,6 +69,7 @@
     <Compile Include="Native\Trigonometric.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="RestParameters.cs" />
+    <Compile Include="SList.cs" />
     <Compile Include="SpecialForms\And.cs" />
     <Compile Include="SpecialForms\Conditional.cs" />
     <Compile Include="SpecialForms\Define.cs" />

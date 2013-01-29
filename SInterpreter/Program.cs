@@ -21,17 +21,26 @@ namespace SInterpreter
             string evaluation = null;
             while (expr != null)
             {
-                evaluation = globalFrame.Evaluate(expr).ToString();
-                Console.WriteLine(evaluation);
-                if (!result.StartsWith("ignore") && !EqualEvals(evaluation,result)) 
+                try
                 {
-                    Console.WriteLine(evaluation + " did not match result: " + result);
-                    //return;
+                    evaluation = globalFrame.Evaluate(expr).ToString();
+
+                    Console.WriteLine(evaluation);
+                    if (!result.StartsWith("ignore") && !EqualEvals(evaluation, result))
+                    {
+                        Console.WriteLine(evaluation + " did not match result: " + result);
+                        //return;
+                    }
+                    if (result.StartsWith("ignore"))
+                    {
+                        Console.WriteLine("Expected Printout: " + result.Replace("ignore", ""));
+                    }
                 }
-                if (result.StartsWith("ignore"))
+                catch (RaisedException ex)
                 {
-                    Console.WriteLine("Expected Printout: " + result.Replace("ignore", ""));
+                    Console.WriteLine(ex.Message);
                 }
+
                 expr = scanner.NextExpression;
                 result = testReader.ReadLine();
             }
@@ -69,6 +78,10 @@ namespace SInterpreter
             global.AddBinding("/", new Divide(global));
             global.AddBinding(">", new GreaterThan(global));
             global.AddBinding("<", new LessThan(global));
+            global.AddBinding(">=", new GreaterOrEqualThan(global));
+            global.AddBinding("<=", new LessOrEqualThan(global));
+            global.AddBinding("=>", new GreaterOrEqualThan(global));
+            global.AddBinding("=<", new LessOrEqualThan(global));
             global.AddBinding("=", new Equals(global));
             global.AddBinding("not", new Not(global));
             global.AddBinding("remainder", new Remainder(global));
@@ -93,6 +106,7 @@ namespace SInterpreter
             global.AddBinding("min", new Min(global));
             global.AddBinding("max", new Max(global));
             global.AddBinding("error", new Error(global));
+            global.AddBinding("list", new ListCreate(global));
             return global;
         }
 

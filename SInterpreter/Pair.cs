@@ -32,6 +32,11 @@ namespace SInterpreter
             return _rest;
         }
 
+        public object Cons(object item)
+        {
+            return new Pair(item,this);
+        }
+
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();

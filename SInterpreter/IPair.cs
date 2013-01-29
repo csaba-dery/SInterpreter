@@ -9,5 +9,6 @@ namespace SInterpreter
     {
         object GetFirst();
         object GetRest();
+        object Cons(object item);
     }
 }

@@ -31,7 +31,7 @@ namespace SInterpreter.Native
             {
                 throw new Exception("cons: Can't find binding for second argument.");
             }
-            return new Pair(firstBinding, restBinding);
+            return ConsFactory.CreatePair(firstBinding, restBinding);
         }
     }
 }
