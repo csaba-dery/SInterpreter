@@ -45,8 +45,6 @@ namespace SInterpreter
                 result = testReader.ReadLine();
             }
 
-            //bool b = fermat_test(1000000007);
-
             codeStream.Close();
             testReader.Close();
         }
@@ -111,46 +109,5 @@ namespace SInterpreter
         }
 
 
-        private static double square(double x) {
-            double result = x * x;
-            return result;
-        }
-
-        private static bool even(double x)
-        {
-            bool result = (x % 2) == 0;
-            return result;
-        }
-
-        private static double expmod(double b, double exp, double m)
-        {
-            if (exp == 0)
-                return 1;
-            else if (even(exp)) {
-                double expm = expmod(b, exp / 2, m);
-                double sq = square(expm);
-                double result = sq % m;
-                return result;
-            } else {
-                double expm = expmod(b,exp-1,m);
-                double pr = b * expm;
-                double result = pr % m;
-                return result;
-            }
-        }
-
-        private static bool fermat_test(Int32 n)
-        {
-            if (n == Int32.MaxValue)
-            {
-                int i = 0;
-            }
-            return try_it(n,new System.Random().Next(n - 1)+1);
-        }
-
-        private static bool try_it(double n, double a)
-        {
-            return expmod(a,n,n) == a;
-        }
     }
 }

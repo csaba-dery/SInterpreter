@@ -10,9 +10,8 @@ namespace SInterpreter
         private static IDictionary<String, ISpecialForm> _specialFormBindings = new Dictionary<string,ISpecialForm>();
         private static int frameCount = 0; //debugging variable
         private static int callCount = 0;
-        private static int identityCount = 0;
         private bool _isLastCall = false;
-        private bool _evalOperands = false;
+
 
         static Frame()
         {
@@ -104,23 +103,6 @@ namespace SInterpreter
             get;
             private set;
         }
-
-        /*internal object Evaluate(Expression expression)
-        {
-            return Evaluate(expression, false);
-        }
-
-        internal object Evaluate(Expression expression, bool checkTailCall)
-        {
-            List<Expression> expressions = new List<Expression>(1);
-            expressions.Add(expression);
-            return Evaluate(expressions,checkTailCall);
-        }
-
-        internal object Evaluate(List<Expression> expressions)
-        {
-            return Evaluate(expressions, true);
-        }*/
 
 
         internal object Evaluate(List<Expression> expressions)
@@ -215,13 +197,8 @@ namespace SInterpreter
             if (checkTailCall)
             {
                 Frame tailCallFrame = FindCallingTailCallFrame(proc, procName);
-                //Frame tailCallCallingFrame = FindCallingTailCallFrame(proc, procName);
                 if (tailCallFrame != null)
                 {
-                    /*if (tailCallCallingFrame != null && tailCallFrame != tailCallCallingFrame)
-                    {
-                        int i=1;
-                    }*/
                     List<IDictionary<string, Procedure>> bindings = new List<IDictionary<string, Procedure>>();                    
                     Frame current = this;
                     while (current != null && current.ParentFrame != null)
@@ -244,17 +221,7 @@ namespace SInterpreter
                     {
                         tailCallFrame.ReplaceBindings(binding);
                     }
-                    /*Frame current = this;
-                    while (current != tailCallFrame)
-                    {
-                        tailCallFrame.ReplaceBindings(current._bindings);
-                        current = current.ParentFrame;
-                    }*/
-                    /*tailCallFrame.ReplaceBindings(this._bindings);
-                    if (this.ParentFrame != tailCallFrame)
-                    {
-                        tailCallFrame.ParentFrame = this.ParentFrame;
-                    }*/
+
                     return new Continuation(expression, tailCallFrame);
                 }
             }
@@ -272,13 +239,6 @@ namespace SInterpreter
             }
         }
 
-        private object OperandEvaluate(Expression expr)
-        {
-            _evalOperands = true;
-            object o = Evaluate(expr, false);
-            _evalOperands = false;
-            return o;
-        }
 
         private object ApplyProc(Expression expression,String name, Procedure proc, bool checkTailCall)
         {
@@ -325,7 +285,7 @@ namespace SInterpreter
                 }
                 else if (result is Continuation)
                 {
-                    int x = 0;
+                    throw new Exception("");
                 }
                 else
                 {
@@ -333,16 +293,6 @@ namespace SInterpreter
                     bindings.Add(proc.Parameters[i], new Identity(this, result));
                 }
             }
-
-            /*if (name == "expmod")
-            {
-                Console.WriteLine(expression.ToString());
-                foreach (String key in bindings.Keys)
-                {
-                    Console.WriteLine(key + " - " + bindings[key].Evaluate(null).ToString());
-                }
-                Console.WriteLine();
-            }*/
 
             Frame env = new Frame(bindings, proc.DefinitionEnvironment, this,proc,name);
             object o;
@@ -354,14 +304,6 @@ namespace SInterpreter
             {
                 o = proc.Evaluate(env);
             }
-            /*if (true || name == "random" || name == "expmod" || name == "try-it" || name=="*")
-            {
-                foreach (String key in bindings.Keys)
-                {
-                    //Console.WriteLine(key + " - " + bindings[key].Evaluate(null).ToString());
-                }
-                Console.WriteLine(name + ": " + o.ToString());
-            }*/
             return o;
         }
 
@@ -391,74 +333,6 @@ namespace SInterpreter
                 {
                     return current;
                 }
-            }
-            /*while (current != null)
-            {
-                if (current._isLastCall && 
-                    !current.IsSpecialForm && 
-                    current.EvaluatedProcedure.Equals(proc) && 
-                    current.EvaluatedProcedureName == name) 
-                {
-                    break;
-                }
-                if (!current.IsSpecialForm)
-                {
-                    i++;
-                }
-                current = current.CallingFrame;
-            }
-            if (current != null && i > 1)
-            {
-                Console.WriteLine();
-            }*/
-            return null;
-        }
-
-        private Frame FindTailCallFrame(Procedure proc, string name)
-        {
-            Frame current = this.ParentFrame;
-            int i = 0;
-            while (current != null && current.IsSpecialForm)
-            {
-                current = current.ParentFrame;
-            }
-            if (current != null &&
-                current._isLastCall &&
-                current.EvaluatedProcedure.Equals(proc) &&
-                current.EvaluatedProcedureName == name)
-            {
-                Frame tailCallFrame = current.ParentFrame;
-                /*while (tailCallFrame != null && tailCallFrame.IsSpecialForm)
-                {
-                    tailCallFrame = tailCallFrame.ParentFrame;
-                }*/
-                if (tailCallFrame.ParentFrame != null)
-                {
-                    return tailCallFrame;
-                }
-                else
-                {
-                    return current;
-                }
-            }
-            /*while (current != null)
-            {
-                if (current._isLastCall &&
-                    !current.IsSpecialForm &&
-                    current.EvaluatedProcedure.Equals(proc) &&
-                    current.EvaluatedProcedureName == name)
-                {
-                    break;
-                }
-                if (!current.IsSpecialForm)
-                {
-                    i++;
-                }
-                current = current.ParentFrame;
-            }*/
-            if (current != null && i > 1)
-            {
-                Console.WriteLine();
             }
             return null;
         }

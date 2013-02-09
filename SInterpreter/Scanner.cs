@@ -68,7 +68,6 @@ namespace SInterpreter
 
         private Expression ReadCombination()
         {
-            //Expression oprt = ReadExpression();
             StringBuilder oprtBuilder = new StringBuilder();
             while (!_separators.Contains(_currentChar=_streamReader.Read()) && _currentChar != -1)
             {
