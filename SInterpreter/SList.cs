@@ -33,6 +33,10 @@ namespace SInterpreter
 
         public object GetRest()
         {
+            if (_list.Count == 0)
+            {
+                return null;
+            }
             return new SList(_list.GetRange(1,_list.Count-1));
         }
 
@@ -54,6 +58,15 @@ namespace SInterpreter
             builder.Remove(builder.Length - 1, 1);
             builder.Append(')');
             return builder.ToString();
+        }
+
+
+        internal bool IsEmpty
+        {
+            get
+            {
+                return _list.Count == 0;
+            }
         }
     }
 }

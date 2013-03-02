@@ -55,6 +55,7 @@
     <Compile Include="Native\ListCreate.cs" />
     <Compile Include="Native\Max.cs" />
     <Compile Include="Native\Min.cs" />
+    <Compile Include="Native\NullCheck.cs" />
     <Compile Include="Native\PairRetrieval.cs" />
     <Compile Include="Native\Comparison.cs" />
     <Compile Include="Native\Cons.cs" />

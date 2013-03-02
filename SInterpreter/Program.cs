@@ -105,6 +105,7 @@ namespace SInterpreter
             global.AddBinding("max", new Max(global));
             global.AddBinding("error", new Error(global));
             global.AddBinding("list", new ListCreate(global));
+            global.AddBinding("null?", new NullCheck(global));
             return global;
         }
 
