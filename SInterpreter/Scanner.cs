@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace SInterpreter
 {
-    internal class Scanner
+    public class Scanner
     {
         private int[] _expressionSeparators = { ')', '(' };
         private int[] _whiteSpaceSeparators = { ' ', '\t', '\r','\n' };
@@ -17,13 +17,13 @@ namespace SInterpreter
         private StreamReader _streamReader;
 
 
-        internal Scanner(Stream stream)
+        public Scanner(StreamReader streamReader)
         {
-            this._streamReader = new StreamReader(stream);
+            this._streamReader = streamReader;
         }
 
 
-        internal Expression NextExpression
+        public Expression NextExpression
         {
             get
             {

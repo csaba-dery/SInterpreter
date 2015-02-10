@@ -5,12 +5,12 @@ using System.Text;
 
 namespace SInterpreter
 {
-    internal class RaisedException : Exception
+    public class InterpreterException : Exception
     {
-        internal RaisedException() : base() { }
+        internal InterpreterException() : base() { }
 
-        internal RaisedException(string message) : base(message) { }
+        internal InterpreterException(string message) : base(message) { }
 
-        internal RaisedException(string message, Exception innerException) : base(message,innerException) { }
+        internal InterpreterException(string message, Exception innerException) : base(message,innerException) { }
     }
 }

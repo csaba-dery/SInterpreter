@@ -19,7 +19,7 @@ namespace SInterpreter.Native
                 throw new Exception("Invalid number of parameters.");
             }
             string message = environment.FindBindingValue(Parameters[0]).ToString();
-            throw new RaisedException(message);
+            throw new InterpreterException(message);
         }
     }
 }

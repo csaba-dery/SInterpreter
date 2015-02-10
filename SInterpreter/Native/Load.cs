@@ -26,9 +26,9 @@ namespace SInterpreter.Native
                 throw new Exception("Could not find file: " + path);
             }
 
-            using (BufferedStream codeStream = new BufferedStream(new FileStream(path, FileMode.Open)))
+            using (StreamReader codeReader = new StreamReader(File.Open(path, FileMode.Open)))
             {
-                Scanner scanner = new Scanner(codeStream);
+                Scanner scanner = new Scanner(codeReader);
 
                 Expression expr = scanner.NextExpression;
                 string evaluation = string.Empty;

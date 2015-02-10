@@ -34,15 +34,28 @@ namespace SInterpreter
         internal Frame(IDictionary<String, Procedure> bindings, Frame parent, Frame callingFrame, Procedure proc, bool isSpecialForm, string name)
         {
             _bindings = bindings;
+            if (_bindings == null)
+            {
+                _bindings = new Dictionary<String, Procedure>();
+            }
             ParentFrame = parent;
             CallingFrame = callingFrame;
             EvaluatedProcedure = proc;
             EvaluatedProcedureName = name;
             IsSpecialForm = isSpecialForm;
+            Name = name;
             frameCount++;
         }
 
+        public String Name { get; private set; }
 
+        public int HashCode
+        {
+            get
+            {
+                return this.GetHashCode();
+            }
+        }
 
         private bool IsSpecialForm { get; set; }
 

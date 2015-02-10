@@ -10,7 +10,7 @@ namespace SInterpreter
 
     }
 
-    internal abstract class Expression
+    public abstract class Expression
     {
         internal abstract Expression GetFirst();
         internal abstract List<Expression> GetRest();

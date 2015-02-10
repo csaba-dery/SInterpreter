@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="ConsFactory.cs" />
     <Compile Include="Continuation.cs" />
+    <Compile Include="Interpreter.cs" />
     <Compile Include="InterpreterException.cs" />
     <Compile Include="IPair.cs" />
     <Compile Include="Native\Add.cs" />
