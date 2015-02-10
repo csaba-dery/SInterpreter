@@ -1,0 +1,411 @@
+(define x (cons 1 2))
+(car x)
+(cdr x)
+(define x (cons 1 2))
+(define y (cons 3 4))
+(define z (cons x y))
+(car (car z))
+(car (cdr z))
+
+(define (add-rat x y)
+(make-rat (+ (* (numer x) (denom y))
+(* (numer y) (denom x)))
+(* (denom x) (denom y))))
+
+(define (sub-rat x y)
+(make-rat (- (* (numer x) (denom y))
+(* (numer y) (denom x)))
+(* (denom x) (denom y))))
+
+(define (mul-rat x y)
+(make-rat (* (numer x) (numer y))
+(* (denom x) (denom y))))
+
+(define (div-rat x y)
+(make-rat (* (numer x) (denom y))
+(* (denom x) (numer y))))
+
+(define (equal-rat? x y)
+(= (* (numer x) (denom y))
+(* (numer y) (denom x))))
+
+(define (make-rat n d) (cons n d))
+
+(define (numer x) (car x))
+
+(define (denom x) (cdr x))
+
+(define (print-rat x)
+(newline)
+(display (numer x))
+(display "/")
+(display (denom x)))
+
+(define one-half (make-rat 1 2))
+
+(define one-third (make-rat 1 3))
+
+(define (make-rat n d)
+(let ((g (gcd n d)))
+(cons (/ n g) (/ d g))))
+
+(print-rat (add-rat one-third one-third))
+
+(define (abs x)
+(if (< x 0)
+(- x)
+x))
+
+(define (make-rat n d)
+  (let ((n-abs (abs n))
+        (d-abs (abs d))
+        (g (gcd n d)))
+    (if (= (* n d-abs) (* d n-abs))
+        (cons (/ n-abs g) (/ d-abs g))
+        (cons (- (/ n-abs g)) (/ d-abs g)))))
+
+(define x (make-rat -1 -2))
+(print-rat x)
+
+(define (print-point p)
+   (newline)
+   (display "(")
+   (display (x-point p))
+   (display ",")
+   (display (y-point p))
+   (display ")"))
+
+(define (make-point x y) (cons x y))
+
+(define (x-point p) (car p))
+(define (y-point p) (cdr p))
+
+(define (make-segment a b) (cons a b))
+
+(define (start-segment s) (car s))
+(define (end-segment s) (cdr s))
+
+(define (midpoint-segment s)
+    (make-point (/ (+ (x-point (start-segment s))
+                     (x-point (end-segment s)))
+                  2)
+               (/ (+ (y-point (start-segment s))
+                    (y-point (end-segment s)))
+                  2)))
+
+(define a (make-point -1 2))
+(define b (make-point 3 -6))
+(define s (make-segment a b))
+(define m (midpoint-segment s))
+(print-point m)
+
+(define a (make-point 6.4 3))
+(define b (make-point -10.7 4))
+(define s (make-segment a b))
+(define m (midpoint-segment s))
+(print-point m)
+
+(define (make-rect a b) (cons a b))
+
+(define (rect-width r)
+   (abs (- (x-point (car r)) (x-point (cdr r)))))
+
+(define (rect-height r)
+   (abs (- (y-point (car r)) (y-point (cdr r)))))
+
+(define (rect-perimeter r)
+   (* 2 (+ (rect-width r) (rect-height r))))
+
+(define (rect-area r)
+   (* (rect-width r) (rect-height r)))
+
+(define a (make-point 0 0))
+(define b (make-point 2 10))
+(define r (make-rect a b))
+(rect-perimeter r)
+(rect-area r)
+
+(define (make-rect a w h) (cons a (cons w h)))
+
+(define (rect-width r)
+   (car (cdr r)))
+
+(define (rect-height r)
+   (cdr (cdr r)))
+
+(define a (make-point 0 0))
+(define r (make-rect a 2 10))
+(rect-perimeter r)
+(rect-area r)
+
+(define zero (lambda (f) (lambda (x) x)))
+
+(define (add-1 n)
+   (lambda (f) (lambda (x) (f ((n f) x)))))
+
+(define (inc n)
+   (+ n 1))
+
+((zero inc) 0)
+
+((zero inc) 1)
+
+((zero inc) 2)
+
+(define one (add-1 zero))
+(define two (add-1 one))
+((one inc) 0)
+
+((one inc) 1)
+
+((two inc) 0)
+
+((two inc) 1)
+
+(define one
+   (lambda (f) (lambda (x) (f x))))
+
+(define two
+   (lambda (f) (lambda (x) (f (f x)))))
+
+((one inc) 0)
+
+((one inc) 5)
+
+((two inc) 3)
+
+((two inc) 7)
+
+(define (add-church m n)
+   (lambda (f) (lambda (x) ((m f) ((n f) x)))))
+
+(define three (add-church one two))
+(define four (add-church two two))
+(define seven (add-church three four))
+((three inc) 0)
+
+((four inc) 0)
+
+((seven inc) 0)
+
+(define (add-interval x y)
+(make-interval (+ (lower-bound x) (lower-bound y))
+(+ (upper-bound x) (upper-bound y))))
+
+(define (mul-interval x y)
+(let ((p1 (* (lower-bound x) (lower-bound y)))
+(p2 (* (lower-bound x) (upper-bound y)))
+(p3 (* (upper-bound x) (lower-bound y)))
+(p4 (* (upper-bound x) (upper-bound y))))
+(make-interval (min p1 p2 p3 p4)
+(max p1 p2 p3 p4))))
+
+(define (div-interval x y)
+(mul-interval x
+(make-interval (/ 1.0 (upper-bound y))
+(/ 1.0 (lower-bound y)))))
+
+(define (make-interval a b) (cons a b))
+
+(define (upper-bound interval) (cdr interval))
+(define (lower-bound interval) (car interval))
+
+(define (sub-interval x y)
+   (make-interval (- (lower-bound x) (upper-bound y))
+                  (- (upper-bound x) (lower-bound y)))) 
+
+(define a (make-interval 1 10))
+(define b (make-interval 50 100))
+(define c (make-interval 5 20))
+(sub-interval b a)
+(sub-interval a b)
+(sub-interval a c)
+(sub-interval c a)
+
+(define a (make-interval 2 4))
+(define b (make-interval 5 10))
+(define c (make-interval 10 15))
+(mul-interval a b)
+(mul-interval a c)
+
+(define (spans-zero? y)
+   (and (<= (lower-bound y) 0)
+        (>= (upper-bound y) 0)))
+
+(define (div-interval x y)
+   (if (spans-zero? y)
+       (error "Error: The denominator should not span 0.")
+       (mul-interval x
+                 (make-interval (/ 1.0 (upper-bound y))
+                                (/ 1.0 (lower-bound y))))))
+
+(define a (make-interval 2 5))
+(define b (make-interval -2 2))
+(div-interval a b)
+
+(define (mul-interval x y)
+   (let ((xlo (lower-bound x))
+         (xhi (upper-bound x))
+         (ylo (lower-bound y))
+         (yhi (upper-bound y)))
+   (cond ((and (>= xlo 0)
+               (>= xhi 0)
+               (>= ylo 0)
+               (>= yhi 0))
+          (make-interval (* xlo ylo) (* xhi yhi)))
+         ((and (>= xlo 0)
+               (>= xhi 0)
+               (<= ylo 0)
+               (>= yhi 0))
+          (make-interval (* xhi ylo) (* xhi yhi)))
+         ((and (>= xlo 0)
+               (>= xhi 0)
+               (<= ylo 0)
+               (<= yhi 0))
+          (make-interval (* xhi ylo) (* xlo yhi)))
+         ((and (<= xlo 0)
+               (>= xhi 0)
+               (>= ylo 0)
+               (>= yhi 0))
+          (make-interval (* xlo yhi) (* xhi yhi)))
+         ((and (<= xlo 0)
+               (>= xhi 0)
+               (<= ylo 0)
+               (>= yhi 0))
+          (make-interval (min (* xhi ylo) (* xlo yhi))
+                         (max (* xlo ylo) (* xhi yhi))))
+         ((and (<= xlo 0)
+               (>= xhi 0)
+               (<= ylo 0)
+               (<= yhi 0))
+          (make-interval (* xhi ylo) (* xlo ylo)))
+         ((and (<= xlo 0)
+               (<= xhi 0)
+               (>= ylo 0)
+               (>= yhi 0))
+          (make-interval (* xlo yhi) (* xhi ylo)))
+         ((and (<= xlo 0)
+               (<= xhi 0)
+               (<= ylo 0)
+               (>= yhi 0))
+          (make-interval (* xlo yhi) (* xlo ylo)))
+         ((and (<= xlo 0)
+               (<= xhi 0)
+               (<= ylo 0)
+               (<= yhi 0))
+          (make-interval (* xhi yhi) (* xlo ylo))))))
+
+(define a (make-interval 2 4))
+(define b (make-interval -2 4))
+(define c (make-interval -4 -2))
+(mul-interval a a)
+(mul-interval a b)
+(mul-interval a c)
+(mul-interval b a)
+(mul-interval b b)
+(mul-interval b c)
+(mul-interval c a)
+(mul-interval c b)
+(mul-interval c c)
+
+(define (make-center-width c w)
+   (make-interval (- c w) (+ c w)))
+
+(define (center i)
+   (/ (+ (lower-bound i) (upper-bound i)) 2))
+
+(define (width i)
+   (/ (- (upper-bound i) (lower-bound i)) 2))
+
+(define a (make-center-width 5 1))
+a
+(center a)
+(width a)
+
+(define (make-center-percent c p)
+   (make-center-width c (* c (/ p 100.0))))
+
+(define (percent i)
+   (* 100.0 (/ (width i) (center i))))
+
+(define a (make-center-percent 5 20))
+a
+(center a)
+(width a)
+(percent a)
+
+(define a (make-center-percent 5 2))
+(define b (make-center-percent 10 3))
+(define c (mul-interval a b))
+(percent c)
+
+(define (par1 r1 r2)
+   (div-interval (mul-interval r1 r2)
+                 (add-interval r1 r2)))
+
+(define (par2 r1 r2)
+   (let ((one (make-interval 1 1)))
+      (div-interval one
+                    (add-interval (div-interval one r1)
+                                  (div-interval one r2)))))
+
+(define a (make-center-percent 100 5))
+(define b (make-center-percent 200 2))
+(define aa (div-interval a a))
+aa
+(define ab (div-interval a b))
+ab
+(center aa)
+(center ab)
+(percent aa)
+(percent ab)
+
+(define apb1 (par1 a b))
+(define apb2 (par2 a b))
+apb1
+apb2
+(define apa1 (par1 a a))
+(define apa2 (par2 a a))
+apa1
+apa2
+
+(define one-through-four (list 1 2 3 4))
+one-through-four
+(car one-through-four)
+(cdr one-through-four)
+(car (cdr one-through-four))
+
+(cons 10 one-through-four)
+(cons 5 one-through-four)
+
+(define (list-ref items n)
+(if (= n 0)
+(car items)
+(list-ref (cdr items) (- n 1))))
+(define squares (list 1 4 9 16 25))
+(list-ref squares 3)
+
+(define (length items)
+(if (null? items)
+0
+(+ 1 (length (cdr items)))))
+(define odds (list 1 3 5 7))
+(length odds)
+
+(define (length items)
+(define (length-iter a count)
+(if (null? a)
+count
+(length-iter (cdr a) (+ 1 count))))
+(length-iter items 0))
+
+(define evens (list 2 4 6 8 10))
+(length evens)
+
+(define (append list1 list2)
+(if (null? list1)
+list2
+(cons (car list1) (append (cdr list1) list2))))
+
+(append squares odds)
+(append odds squares)

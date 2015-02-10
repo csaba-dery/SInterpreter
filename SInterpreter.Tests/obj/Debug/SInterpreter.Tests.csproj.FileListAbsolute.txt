@@ -1,0 +1,9 @@
+C:\topcoder\SInterpreter\SInterpreter.Tests\obj\Debug\SInterpreter.Tests.csprojResolveAssemblyReference.cache
+C:\topcoder\SInterpreter\SInterpreter.Tests\bin\Debug\code2.txt
+C:\topcoder\SInterpreter\SInterpreter.Tests\bin\Debug\test2.txt
+C:\topcoder\SInterpreter\SInterpreter.Tests\bin\Debug\SInterpreter.Tests.dll
+C:\topcoder\SInterpreter\SInterpreter.Tests\bin\Debug\SInterpreter.Tests.pdb
+C:\topcoder\SInterpreter\SInterpreter.Tests\bin\Debug\SInterpreter.exe
+C:\topcoder\SInterpreter\SInterpreter.Tests\bin\Debug\SInterpreter.pdb
+C:\topcoder\SInterpreter\SInterpreter.Tests\obj\Debug\SInterpreter.Tests.dll
+C:\topcoder\SInterpreter\SInterpreter.Tests\obj\Debug\SInterpreter.Tests.pdb
